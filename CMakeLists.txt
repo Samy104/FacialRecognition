@@ -9,9 +9,7 @@ set(SOURCE_FILES main.cpp)
 link_directories($ENV{WXWIDGETS_HOME}/lib)
 
 include_directories($ENV{WXWIDGETS_HOME}/include
-                    $ENV{OPENCV_HOME}/build/include)
-
-
+        $ENV{OPENCV_HOME}/build/include)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
@@ -19,10 +17,9 @@ find_package(wxWidgets COMPONENTS net gl core base)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
     # and for each of your dependent executable/library targets:
-    target_link_libraries(<YourTarget> ${wxWidgets_LIBRARIES})
+    target_link_libraries(FacialRecognition ${wxWidgets_LIBRARIES})
 endif()
 
 # Linking the libraries
-TARGET_LINK_LIBRARIES(FacialRecognition
-        ${OpenCV_LIBS}
-        wxWidgets)
+TARGET_LINK_LIBRARIES(FacialRecognition)
+
