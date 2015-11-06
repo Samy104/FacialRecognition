@@ -18,6 +18,8 @@ $ENV{WXWIN}/lib/gcc_dll/mswu
 $ENV{WXWIN}/lib/gcc_lib
 $ENV{WXWIN}/lib/gcc_lib/mswu 
 
-remove both IPP in CMAKE_GUI 
+#remove both IPP in CMAKE_GUI 
 ###BUILD
 ###WITH
+
+based off: http://perso.uclouvain.be/allan.barrea/opencv/cmake_config.html
