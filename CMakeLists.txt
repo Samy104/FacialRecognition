@@ -16,7 +16,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11")
 
 set(SOURCE_FILES
         main.cpp
-        )
+        wxMainFrame.cpp wxMainFrame.h RecognitionProcess.cpp RecognitionProcess.h Image.cpp Image.h ImageManager.cpp ImageManager.h)
 
 add_executable(FacialRecognition  ${SOURCE_FILES} main.cpp)
 target_link_libraries(FacialRecognition ${wxWidgets_LIBRARIES})

@@ -1,0 +1,14 @@
+//
+// Created by lemce on 2015-11-06.
+//
+
+#ifndef FACIALRECOGNITION_RECOGNITIONPROCESS_H
+#define FACIALRECOGNITION_RECOGNITIONPROCESS_H
+
+
+class recognitionProcess {
+
+};
+
+
+#endif //FACIALRECOGNITION_RECOGNITIONPROCESS_H
