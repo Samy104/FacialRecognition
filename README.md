@@ -19,5 +19,5 @@ $ENV{WXWIN}/lib/gcc_lib
 $ENV{WXWIN}/lib/gcc_lib/mswu 
 
 remove both IPP in CMAKE_GUI 
-#BUILD
-#WITH
+###BUILD
+###WITH
