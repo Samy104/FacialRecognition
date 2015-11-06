@@ -1,25 +1,22 @@
 cmake_minimum_required(VERSION 3.3)
 project(FacialRecognition)
 
-# Linker options
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES main.cpp)
-
+set(wxWidgets_CONFIGURATION mswu)
+find_package(wxWidgets COMPONENTS core base REQUIRED)
+include(${wxWidgets_USE_FILE})
 # Link Directories and include directories
-link_directories($ENV{WXWIDGETS_HOME}/lib)
+link_directories($ENV{WXWIN}/lib/gcc_lib)
 
-include_directories($ENV{WXWIDGETS_HOME}/include
+include_directories(${wxWidgets_INCLUDE_DIRS}
+        $ENV{WXWIN}/lib/gcc_lib/mswu
         $ENV{OPENCV_HOME}/build/include)
 
-add_executable(FacialRecognition ${SOURCE_FILES})
+# Linker options
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
-find_package(wxWidgets COMPONENTS net gl core base)
-if(wxWidgets_FOUND)
-    include(${wxWidgets_USE_FILE})
-    # and for each of your dependent executable/library targets:
-    target_link_libraries(FacialRecognition ${wxWidgets_LIBRARIES})
-endif()
+set(SOURCE_FILES
+        main.cpp
+        )
 
-# Linking the libraries
-TARGET_LINK_LIBRARIES(FacialRecognition)
-
+add_executable(FacialRecognition  ${SOURCE_FILES} main.cpp)
+target_link_libraries(FacialRecognition ${wxWidgets_LIBRARIES})

@@ -1,9 +1,6 @@
 // wxWidgets "Hello world" Program
 // For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
-#include <wx/event.h>
-#include <wx/menu.h>
-#include <wx/gdicmn.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
@@ -20,16 +17,18 @@ private:
     void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
-wxDECLARE_EVENT_TABLE();
+
+    wxDECLARE_EVENT_TABLE();
 };
 enum
 {
     ID_Hello = 1
 };
+
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-                EVT_MENU(ID_Hello,   MyFrame::OnHello)
-                EVT_MENU(wxID_EXIT,  MyFrame::OnExit)
-                EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
+    EVT_MENU(ID_Hello,   MyFrame::OnHello)
+    EVT_MENU(wxID_EXIT,  MyFrame::OnExit)
+    EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
 wxEND_EVENT_TABLE()
 wxIMPLEMENT_APP(MyApp);
 bool MyApp::OnInit()
