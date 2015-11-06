@@ -1,10 +1,5 @@
 #include "wxMainFrame.h"
 
-enum
-{
-    ID_Hello = 1
-};
-
 wxBEGIN_EVENT_TABLE(wxMainFrame, wxFrame)
                 EVT_MENU(ID_Hello,   wxMainFrame::OnHello)
                 EVT_MENU(wxID_EXIT,  wxMainFrame::OnExit)

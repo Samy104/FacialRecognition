@@ -2,6 +2,7 @@
 #include "wxMainFrame.h"
 #include <thread>
 #include "RecognitionProcess.h"
+#include "Image.h"
 
 class RecognitionApp: public wxApp
 {
@@ -16,6 +17,9 @@ public:
 wxIMPLEMENT_APP(RecognitionApp);
 bool RecognitionApp::OnInit()
 {
+    string imagePath = "C:/Users/Chris/Pictures/Saved Pictures/me.jpg";
+    Image *me = new Image(imagePath);
+
     wxMainFrame *frame = new wxMainFrame( "Facial Recognition Module", wxPoint(50, 50), wxSize(450, 340) );
     frame->Show( true );
 
