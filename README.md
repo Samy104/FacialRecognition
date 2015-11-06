@@ -5,15 +5,19 @@ Environment Variables
 wxWidgets = WXWIN
 OpenCL = OpenCL_HOME
 
-Libraries used: 
+#Libraries used: 
 wxWidgets v3.0.2
 OpenCL 3.0.0
 
-Linking the libraries
+##Linking the libraries
 Dynamic Linking
 $ENV{WXWIN}/lib/gcc_dll
 $ENV{WXWIN}/lib/gcc_dll/mswu
 
-Static Linking
+##Static Linking
 $ENV{WXWIN}/lib/gcc_lib
 $ENV{WXWIN}/lib/gcc_lib/mswu 
+
+remove both IPP in CMAKE_GUI 
+#BUILD
+#WITH
