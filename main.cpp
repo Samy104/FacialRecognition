@@ -3,6 +3,7 @@
 #include <thread>
 #include "RecognitionProcess.h"
 #include "Image.h"
+#include "ImagePanel.h"
 
 class RecognitionApp: public wxApp
 {
@@ -17,10 +18,17 @@ public:
 wxIMPLEMENT_APP(RecognitionApp);
 bool RecognitionApp::OnInit()
 {
-    string imagePath = "C:/Users/Chris/Pictures/Saved Pictures/me.jpg";
-    Image *me = new Image(imagePath);
+    //wxInitAllImageHandlers();
 
+    wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     wxMainFrame *frame = new wxMainFrame( "Facial Recognition Module", wxPoint(50, 50), wxSize(450, 340) );
+
+    Image* samyPic = new Image("Images/samy01.jpg");
+    ImagePanel* imgPanel = new ImagePanel(frame, samyPic);
+
+    sizer->Add(imgPanel, 1, wxEXPAND);
+
+    frame->SetSizer(sizer);
     frame->Show( true );
 
     //m_mainProcess = new std::thread(&RecognitionProcess::RecognitionProcess, this);

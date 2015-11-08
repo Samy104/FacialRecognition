@@ -2,9 +2,11 @@
 #define __FACRECIMAGE__H__
 
 #include <string>
-#include <opencv2/opencv.hpp>
-#include <opencv2/core/mat.hpp>
-#include <iostream>
+#include <vector>
+#include <wx/wx.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 
 using namespace cv;
 using namespace std;
@@ -12,16 +14,18 @@ using namespace std;
 class Image{
 private:
     string mImagePath;
-    /**
-     * this instantly crashes when included. even if not used...
-     */
-    //Mat* mImageMatrix;
+    Mat mImageMatrix;
+    wxImage* mImage;
 
+    void convertToRGB();
 public:
+    Image(std::string path);
     Image(std::string &path);
+    Image(wxImage& img);
+
+    wxImage* getImage();
 
     void printImageMatrix();
-    ~Image();
 };
 
 #endif

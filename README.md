@@ -14,7 +14,12 @@ OpenCL 3.0.0
 #IMPORTANT MODIFICATIONS
 ##Install CMAKE (for cmake gui)
 https://cmake.org/files/v3.4/cmake-3.4.0-rc3-win32-x86.exe
+Change: ->OPENCV_HOME/modules/videoio/src/cap_dshow.cpp and add this line in the file:
+\#define STRSAFE_NO_DEPRECATE
+
 ##Building OPENCV
+##Build with CMAKE_BUILD_TYPE=RELEASE 
+##BUILD WITH CMAKE_BUILD_TYPE=DEBUG (if you want to debug)
 based off: http://perso.uclouvain.be/allan.barrea/opencv/cmake_config.html
 --very important (wont built with it enabled)
 ###remove both IPP in CMAKE_GUI 

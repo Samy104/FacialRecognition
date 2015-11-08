@@ -1,9 +1,9 @@
 #include "wxMainFrame.h"
 
 wxBEGIN_EVENT_TABLE(wxMainFrame, wxFrame)
-                EVT_MENU(ID_Hello,   wxMainFrame::OnHello)
-                EVT_MENU(wxID_EXIT,  wxMainFrame::OnExit)
-                EVT_MENU(wxID_ABOUT, wxMainFrame::OnAbout)
+    EVT_MENU(ID_Hello,   wxMainFrame::OnHello)
+    EVT_MENU(wxID_EXIT,  wxMainFrame::OnExit)
+    EVT_MENU(wxID_ABOUT, wxMainFrame::OnAbout)
 wxEND_EVENT_TABLE()
 
 wxMainFrame::wxMainFrame(const wxString& title, const wxPoint& pos, const wxSize& size)

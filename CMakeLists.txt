@@ -1,28 +1,28 @@
 cmake_minimum_required(VERSION 3.3)
 project(FacialRecognition)
+set(VERBOSE=1)
 
-#WXWIDEGS Directory
+#WXWIDGETS Directory
 set(wxWidgets_CONFIGURATION mswu)
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 
 #OpenCV Directory
 set(OpenCV_DIR $ENV{OPENCV_BUILD})
-find_package(OpenCV REQUIRED)
+find_package(OpenCV COMPONENTS opencv_core opencv_highgui REQUIRED)
 
 include(${wxWidgets_USE_FILE})
-# Link Directories and include directories
+
+include_directories(
+        ${wxWidgets_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
+)
 
 link_directories(
         ${wxWidgets_LIBRARIES}
         ${OpenCV_LIBRARIES}
 )
 
-include_directories(
-        ${wxWidgets_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS}
-        )
-
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11 -static")
 
 set(SOURCE_FILES
         main.cpp
@@ -30,7 +30,7 @@ set(SOURCE_FILES
         RecognitionProcess.cpp
         Image.cpp
         ImageManager.cpp
-        )
+        ImagePanel.cpp)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
