@@ -11,15 +11,8 @@ using namespace std;
 class RecognitionProcess {
 private:
     ImageManager* imageManager;
-
-    void detect();
-    void recognize();
-
 public:
-    RecognitionProcess();
     RecognitionProcess(ImageManager *pManager);
 
     Ptr<FaceRecognizer> model;
-    Mat normalizeImageMatrix(Mat incoming);
-
 };
