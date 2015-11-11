@@ -33,7 +33,10 @@ set(SOURCE_FILES
         RecognitionProcess.cpp
         Image.cpp
         ImageManager.cpp
-        ImagePanel.cpp VideoPanel.cpp VideoPanel.h Directory.cpp Directory.h)
+        ImagePanel.cpp
+        VideoPanel.cpp
+        Directory.cpp
+        )
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 

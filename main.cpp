@@ -2,9 +2,7 @@
 #include "wxMainFrame.h"
 #include <thread>
 #include "RecognitionProcess.h"
-#include "Image.h"
 #include "ImagePanel.h"
-#include "ImageManager.h"
 
 class RecognitionApp: public wxApp
 {
@@ -25,7 +23,7 @@ bool RecognitionApp::OnInit()
     wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     wxMainFrame *frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 340) );
 
-    string path = "../../Images/train/samy01.jpg";
+    string path = "../../Images/train/samy01_0.jpg";
 
     Image* samyPic = new Image(path);
     ImagePanel* imgPanel = new ImagePanel(frame, samyPic);

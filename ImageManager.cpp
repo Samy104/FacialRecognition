@@ -11,21 +11,20 @@ void ImageManager::readDirectories()
     for(wxString filepath : trainDirectory.getAvailableFiles())
     {
         string temp = filepath.ToStdString();
+        int tempClass = atoi(filepath.ToStdString().substr(filepath.find_last_of("_") + 1, filepath.find_last_of(".")).c_str());
         Image tempImg(temp);
         listOfTrainImages.push_back(tempImg);
         listOfOpenCVTrainImages.push_back(tempImg.getOpenCVMatrix());
-        listOfTrainLabels.push_back(count);
-        count++;
+        listOfTrainLabels.push_back(tempClass);
     }
-    count = 0;
     for(wxString filepath : testDirectory.getAvailableFiles())
     {
         string temp = filepath.ToStdString();
+        int tempClass = atoi(filepath.ToStdString().substr(filepath.find_last_of("_") + 1, filepath.find_last_of(".")).c_str());
         Image tempImg(temp);
         listOfTestImages.push_back(tempImg);
         listOfOpenCVTestImages.push_back(tempImg.getOpenCVMatrix());
-        listOfTestLabels.push_back(count);
-        count++;
+        listOfTestLabels.push_back(tempClass);
     }
 
 }
