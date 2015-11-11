@@ -1,5 +1,4 @@
-#ifndef __FACERECMAINFRAME_H__
-#define __FACERECMAINFRAME_H__
+#pragma once
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
@@ -22,5 +21,3 @@ private:
     wxDECLARE_EVENT_TABLE();
 
 };
-
-#endif

@@ -10,12 +10,14 @@ BEGIN_EVENT_TABLE(ImagePanel, wxPanel)
     EVT_PAINT(ImagePanel::paintEvent)
 END_EVENT_TABLE()
 
-ImagePanel::ImagePanel(wxFrame* parent, Image* image)
+ImagePanel::ImagePanel(wxFrame* parent, Image* image, int bitmapType)
+    :wxPanel(parent, -1, wxPoint(-1, -1), wxSize(250, 250))
 {
     this->m_parent = parent;
     this->mImageForPanel = image;
 }
 ImagePanel::ImagePanel(wxFrame* parent, Image &image)
+        :wxPanel(parent, -1, wxPoint(-1, -1), wxSize(-1, -1))
 {
 
 }
@@ -32,5 +34,6 @@ void ImagePanel::paintNow()
 }
 void ImagePanel::render(wxDC& dc)
 {
-    dc.DrawBitmap(bitmapImage, 0, 0, false );
+    wxBitmap bm(mImageForPanel->getWxImage()->Copy());
+    dc.DrawBitmap(bm,0,0,false);
 }

@@ -1,15 +1,13 @@
 #include "Image.h"
 
-Image::Image(std::string path)
-{
-    this->mImagePath = path;
-    this->mImageMatrix = imread(path, CV_LOAD_IMAGE_COLOR);
-}
-
 Image::Image(std::string &path)
 {
     this->mImagePath = path;
     this->mImageMatrix = imread(path, CV_LOAD_IMAGE_COLOR);
+    if(mImageMatrix.data != nullptr)
+    {
+        this->convertToRGB();
+    }
 }
 
 Image::Image(wxImage& img){}
@@ -25,7 +23,12 @@ void Image::convertToRGB()
     this->mImage = new wxImage(this->mImageMatrix.cols, this->mImageMatrix.rows, this->mImageMatrix.data, true);
 }
 
-wxImage* Image::getImage()
+Mat Image::getOpenCVMatrix()
+{
+    return this->mImageMatrix;
+}
+
+wxImage* Image::getWxImage()
 {
     return this->mImage;
 }

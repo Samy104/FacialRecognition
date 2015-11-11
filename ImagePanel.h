@@ -1,10 +1,4 @@
-//
-// Created by Chris on 11/7/2015.
-//
-
-#ifndef FACIALRECOGNITION_IMAGEPANEL_H
-#define FACIALRECOGNITION_IMAGEPANEL_H
-
+#pragma once
 #include <wx/wx.h>
 #include <wx/sizer.h>
 #include "Image.h"
@@ -15,10 +9,10 @@
 
 class ImagePanel : public wxPanel{
 private:
-    wxBitmap bitmapImage;
+    wxBitmap mBitmapImage;
     Image* mImageForPanel;
 public:
-    ImagePanel(wxFrame* parent, Image* image);
+    ImagePanel(wxFrame* parent, Image* image, int bitmapType = wxBITMAP_TYPE_PNG);
     ImagePanel(wxFrame* parent, Image &image);
 
     void paintEvent(wxPaintEvent& evt);
@@ -27,5 +21,3 @@ public:
 
     DECLARE_EVENT_TABLE();
 };
-
-#endif //FACIALRECOGNITION_IMAGEPANEL_H

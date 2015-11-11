@@ -38,3 +38,6 @@ sys.path.insert(0, '/../../gcc-5.1.0/python')
 from libstdcxx.v6.printers import register_libstdcxx_printers
 \#register_libstdcxx_printers (None)
 end
+
+OpenKinect
+http://openkinect.org/wiki/Getting_Started#Manual_build_from_source (Windows)

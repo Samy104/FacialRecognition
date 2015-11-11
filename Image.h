@@ -1,5 +1,4 @@
-#ifndef __FACRECIMAGE__H__
-#define __FACRECIMAGE__H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -19,13 +18,11 @@ private:
 
     void convertToRGB();
 public:
-    Image(std::string path);
     Image(std::string &path);
     Image(wxImage& img);
 
-    wxImage* getImage();
+    Mat getOpenCVMatrix();
+    wxImage* getWxImage();
 
     void printImageMatrix();
 };
-
-#endif

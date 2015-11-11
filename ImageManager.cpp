@@ -1,13 +1,61 @@
-
 #include "ImageManager.h"
 
-std::vector<Image> m_imageList;
-
-ImageManager::ImageManager(std::string path)
+ImageManager::ImageManager(string trainPath, string testPath) : trainDirectory(trainPath), testDirectory(testPath)
 {
-    // Check if the path is valid
+    this->readDirectories();
+}
 
-    // Go through the directory's files to find images only
+void ImageManager::readDirectories()
+{
+    int count = 0;
+    for(wxString filepath : trainDirectory.getAvailableFiles())
+    {
+        string temp = filepath.ToStdString();
+        Image tempImg(temp);
+        listOfTrainImages.push_back(tempImg);
+        listOfOpenCVTrainImages.push_back(tempImg.getOpenCVMatrix());
+        listOfTrainLabels.push_back(count);
+        count++;
+    }
+    count = 0;
+    for(wxString filepath : testDirectory.getAvailableFiles())
+    {
+        string temp = filepath.ToStdString();
+        Image tempImg(temp);
+        listOfTestImages.push_back(tempImg);
+        listOfOpenCVTestImages.push_back(tempImg.getOpenCVMatrix());
+        listOfTestLabels.push_back(count);
+        count++;
+    }
 
-    // Once we found the images, create the Image and add it to the vector
+}
+
+vector<Image> ImageManager::getTrainImages()
+{
+    return this->listOfTrainImages;
+}
+
+vector<int> ImageManager::getTrainLabels()
+{
+    return this->listOfTrainLabels;
+}
+
+vector<Mat> ImageManager::getOpenCVTrainImages()
+{
+    return this->listOfOpenCVTrainImages;
+}
+
+vector<Image> ImageManager::getTestImages()
+{
+    return this->listOfTestImages;
+}
+
+vector<int> ImageManager::getTestLabels()
+{
+    return this->listOfTestLabels;
+}
+
+vector<Mat> ImageManager::getOpenCVTestImages()
+{
+    return this->listOfOpenCVTestImages;
 }

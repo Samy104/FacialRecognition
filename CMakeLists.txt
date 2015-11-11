@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.3)
 project(FacialRecognition)
-set(VERBOSE=1)
+
+set(BUILD_SHARED_LIBS OFF)
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
 #WXWIDGETS Directory
 set(wxWidgets_CONFIGURATION mswu)
@@ -8,7 +11,7 @@ find_package(wxWidgets COMPONENTS core base REQUIRED)
 
 #OpenCV Directory
 set(OpenCV_DIR $ENV{OPENCV_BUILD})
-find_package(OpenCV COMPONENTS opencv_core opencv_highgui REQUIRED)
+find_package(OpenCV COMPONENTS opencv_core opencv_highgui opencv_face REQUIRED)
 
 include(${wxWidgets_USE_FILE})
 
@@ -30,7 +33,7 @@ set(SOURCE_FILES
         RecognitionProcess.cpp
         Image.cpp
         ImageManager.cpp
-        ImagePanel.cpp)
+        ImagePanel.cpp VideoPanel.cpp VideoPanel.h Directory.cpp Directory.h)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 

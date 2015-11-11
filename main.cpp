@@ -4,6 +4,7 @@
 #include "RecognitionProcess.h"
 #include "Image.h"
 #include "ImagePanel.h"
+#include "ImageManager.h"
 
 class RecognitionApp: public wxApp
 {
@@ -18,12 +19,15 @@ public:
 wxIMPLEMENT_APP(RecognitionApp);
 bool RecognitionApp::OnInit()
 {
-    //wxInitAllImageHandlers();
+    ImageManager* manager = new ImageManager("../../Images/train", "../../Images/test");
+    RecognitionProcess* process = new RecognitionProcess(manager);
 
     wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-    wxMainFrame *frame = new wxMainFrame( "Facial Recognition Module", wxPoint(50, 50), wxSize(450, 340) );
+    wxMainFrame *frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 340) );
 
-    Image* samyPic = new Image("Images/samy01.jpg");
+    string path = "../../Images/train/samy01.jpg";
+
+    Image* samyPic = new Image(path);
     ImagePanel* imgPanel = new ImagePanel(frame, samyPic);
 
     sizer->Add(imgPanel, 1, wxEXPAND);
