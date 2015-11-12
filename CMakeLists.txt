@@ -3,15 +3,21 @@ project(FacialRecognition)
 
 set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
 #WXWIDGETS Directory
-set(wxWidgets_CONFIGURATION mswu)
+if(WIN32)
+    set(wxWidgets_ROOT_DIR $ENV{WXWIN})
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
+
+else()
+    set(wxWidgets_ROOT_DIR $ENV{WXWIDGETS_HOME})
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+endif()
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 
 #OpenCV Directory
 set(OpenCV_DIR $ENV{OPENCV_BUILD})
-find_package(OpenCV COMPONENTS opencv_core opencv_highgui opencv_face REQUIRED)
+find_package(OpenCV COMPONENTS core highgui face REQUIRED)
 
 include(${wxWidgets_USE_FILE})
 
@@ -25,7 +31,7 @@ link_directories(
         ${OpenCV_LIBRARIES}
 )
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -static")
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 set(SOURCE_FILES
         main.cpp
@@ -42,5 +48,5 @@ add_executable(FacialRecognition ${SOURCE_FILES})
 
 target_link_libraries(FacialRecognition
         ${wxWidgets_LIBRARIES}
-        ${OpenCV_LIBRARIES}
+        ${OpenCV_LIBS}
         )

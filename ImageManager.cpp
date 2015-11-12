@@ -12,7 +12,7 @@ void ImageManager::readDirectories()
     {
         string temp = filepath.ToStdString();
         int tempClass = atoi(filepath.ToStdString().substr(filepath.find_last_of("_") + 1, filepath.find_last_of(".")).c_str());
-        Image tempImg(temp);
+        Image tempImg(temp, CV_LOAD_IMAGE_GRAYSCALE);
         listOfTrainImages.push_back(tempImg);
         listOfOpenCVTrainImages.push_back(tempImg.getOpenCVMatrix());
         listOfTrainLabels.push_back(tempClass);
@@ -21,7 +21,7 @@ void ImageManager::readDirectories()
     {
         string temp = filepath.ToStdString();
         int tempClass = atoi(filepath.ToStdString().substr(filepath.find_last_of("_") + 1, filepath.find_last_of(".")).c_str());
-        Image tempImg(temp);
+        Image tempImg(temp, CV_LOAD_IMAGE_GRAYSCALE);
         listOfTestImages.push_back(tempImg);
         listOfOpenCVTestImages.push_back(tempImg.getOpenCVMatrix());
         listOfTestLabels.push_back(tempClass);

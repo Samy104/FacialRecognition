@@ -15,14 +15,13 @@ private:
     string mImagePath;
     Mat mImageMatrix;
     wxImage* mImage;
+    int mLoadedType;
 
     void convertToRGB();
 public:
-    Image(std::string &path);
+    Image(std::string &path, int imagetype = CV_LOAD_IMAGE_COLOR);
     Image(wxImage& img);
 
     Mat getOpenCVMatrix();
     wxImage* getWxImage();
-
-    void printImageMatrix();
 };

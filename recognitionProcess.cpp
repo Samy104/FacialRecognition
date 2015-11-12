@@ -6,7 +6,7 @@ RecognitionProcess::RecognitionProcess(ImageManager *pManager)
     int label = -1;
     double confidence = 0.0;
     this->imageManager = pManager;
-    this->model = createEigenFaceRecognizer();
+    this->model = createEigenFaceRecognizer(10, 100.0);
     this->model->train(pManager->getOpenCVTrainImages(), pManager->getTrainLabels());
     for(Mat imageToTest : pManager->getOpenCVTestImages())
     {
