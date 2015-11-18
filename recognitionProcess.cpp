@@ -46,7 +46,7 @@ RecognitionProcess::~RecognitionProcess()
 
 void RecognitionProcess::ContactServer()
 {
-    endpoint->m_client.send(endpoint->m_hd1, "", websockettpp::frame::opcode::text,endpoint->ec);
+    endpoint->m_client.send(endpoint->getNetworkHandle(), "", websocketpp::frame::opcode::text, endpoint->getErrorCode());
 }
 
 

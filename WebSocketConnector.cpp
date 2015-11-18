@@ -18,8 +18,6 @@ WebSocketConnector::WebSocketConnector() : m_open(false), m_done(false)
     m_client.init_asio();
 
     // Bind the handlers we are using
-    using websocketpp::lib::placeholders::_1;
-    using websocketpp::lib::bind;
     m_client.set_open_handler(bind(&WebSocketConnector::on_open,this,::_1));
     m_client.set_close_handler(bind(&WebSocketConnector::on_close,this,::_1));
     m_client.set_fail_handler(bind(&WebSocketConnector::on_fail,this,::_1));
@@ -28,11 +26,10 @@ WebSocketConnector::WebSocketConnector() : m_open(false), m_done(false)
 // This method will block until the connection is complete
 void WebSocketConnector::run(const std::string & uri) {
     // Create a new connection to the given URI
-    websocketpp::lib::error_code ec;
-    client::connection_ptr con = m_client.get_connection(uri, ec);
-    if (ec) {
+    client::connection_ptr con = m_client.get_connection(uri, m_ec);
+    if (m_ec) {
         m_client.get_alog().write(websocketpp::log::alevel::app,
-                                  "Get Connection Error: "+ec.message());
+                                  "Get Connection Error: "+m_ec.message());
         return;
     }
 
@@ -45,8 +42,7 @@ void WebSocketConnector::run(const std::string & uri) {
     m_client.connect(con);
 
     // Create a thread to run the ASIO io_service event loop
-    websocketpp::thread asio_thread(&client::run, &m_client);
-
+    websocketpp::lib::thread asio_thread(&client::run, &m_client);
 
     asio_thread.join();
 }
@@ -77,4 +73,14 @@ void WebSocketConnector::on_fail(websocketpp::connection_hdl hdl)
 
     scoped_lock guard(m_lock);
     m_done = true;
+}
+
+websocketpp::connection_hdl& WebSocketConnector::getNetworkHandle()
+{
+    return this->m_hdl;
+}
+
+websocketpp::lib::error_code& WebSocketConnector::getErrorCode()
+{
+    return this->m_ec;
 }

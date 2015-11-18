@@ -19,5 +19,5 @@ public:
     RecognitionProcess(ImageManager *pManager);
     ~RecognitionProcess();
 
-    Ptr<FaceRecognizer> model;
+    Ptr<BasicFaceRecognizer> model;
 };

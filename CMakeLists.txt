@@ -33,6 +33,7 @@ include_directories(
 link_directories(
         ${wxWidgets_LIBRARIES}
         ${OpenCV_LIBRARIES}
+        $ENV{BOOST_HOME}/lib/gcc
 )
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
@@ -46,7 +47,8 @@ set(SOURCE_FILES
         ImagePanel.cpp
         VideoPanel.cpp
         Directory.cpp
-        WebSocketConnector.cpp)
+        WebSocketConnector.cpp
+        )
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
