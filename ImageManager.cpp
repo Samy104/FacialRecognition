@@ -29,9 +29,9 @@ void ImageManager::readDirectories()
 
 }
 
-vector<Image> ImageManager::getTrainImages()
+vector<Image>* ImageManager::getTrainImages()
 {
-    return this->listOfTrainImages;
+    return &this->listOfTrainImages;
 }
 
 vector<int> ImageManager::getTrainLabels()
@@ -39,14 +39,14 @@ vector<int> ImageManager::getTrainLabels()
     return this->listOfTrainLabels;
 }
 
-vector<Mat> ImageManager::getOpenCVTrainImages()
+vector<Mat>* ImageManager::getOpenCVTrainImages()
 {
-    return this->listOfOpenCVTrainImages;
+    return &this->listOfOpenCVTrainImages;
 }
 
-vector<Image> ImageManager::getTestImages()
+vector<Image>* ImageManager::getTestImages()
 {
-    return this->listOfTestImages;
+    return &this->listOfTestImages;
 }
 
 vector<int> ImageManager::getTestLabels()
@@ -54,7 +54,7 @@ vector<int> ImageManager::getTestLabels()
     return this->listOfTestLabels;
 }
 
-vector<Mat> ImageManager::getOpenCVTestImages()
+vector<Mat>* ImageManager::getOpenCVTestImages()
 {
-    return this->listOfOpenCVTestImages;
+    return &this->listOfOpenCVTestImages;
 }

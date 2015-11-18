@@ -24,6 +24,10 @@ include(${wxWidgets_USE_FILE})
 include_directories(
         ${wxWidgets_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
+        $ENV{WEBSOCKETPP_HOME}
+        $ENV{WEBSOCKETPP_HOME}/include
+        $ENV{BOOST_HOME}
+        $ENV{BOOST_HOME}/boost
 )
 
 link_directories(
@@ -42,7 +46,7 @@ set(SOURCE_FILES
         ImagePanel.cpp
         VideoPanel.cpp
         Directory.cpp
-        )
+        WebSocketConnector.cpp)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
