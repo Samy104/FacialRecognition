@@ -1,23 +1,7 @@
-
+#include "main.h"
 #include "wxMainFrame.h"
-#include <thread>
-#include "RecognitionProcess.h"
-#include "ImagePanel.h"
 
-class RecognitionApp: public wxApp
-{
-private:
-    //std::thread *m_mainProcess;
-    wxSizer* sizer;
-    wxMainFrame *frame;
-    Image* displayPicture;
-    ImagePanel* imgPanel;
-
-    RecognitionProcess* process;
-public:
-    virtual bool OnInit();
-    virtual int OnExit();
-};
+wxMainFrame *m_frame;
 
 
 wxIMPLEMENT_APP(RecognitionApp);
@@ -50,43 +34,38 @@ bool RecognitionApp::OnInit()
     process = new RecognitionProcess(websocketIP, trainingImages, testingImages);
 
     sizer = new wxBoxSizer(wxHORIZONTAL);
-    frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 340) );
+    m_frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 450), this );
 
-    // Samy: To change. Image should be changed by the process using the pointers.
-    string path = "../../Images/train/samy01_0.jpg";
-
-    displayPicture = new Image(path);
-    imgPanel = new ImagePanel(frame, displayPicture);
+    displayPicture = process->GetCurrentImage();
+    imgPanel = new ImagePanel(m_frame, displayPicture);
 
     sizer->Add(imgPanel, 1, wxEXPAND);
 
-    frame->SetSizer(sizer);
-    frame->Show( true );
+    m_frame->SetSizer(sizer);
+    m_frame->Show( true );
 
-    //m_mainProcess = new std::thread(&RecognitionProcess::RecognitionProcess, this, websocketIP, trainingImages, testingImages);
-
+    m_mainProcess = new std::thread(std::bind(&RecognitionProcess::Run, process));
     return true;
 }
 
 int RecognitionApp::OnExit()
 {
-   /* m_mainProcess->join();
 
     if(m_mainProcess != NULL)
     {
         delete m_mainProcess;
         m_mainProcess = NULL;
-    }*/
+    }
 
     if(sizer != NULL)
     {
         delete sizer;
         sizer = NULL;
     }
-    if(frame != NULL)
+    if(m_frame != NULL)
     {
-        delete frame;
-        frame = NULL;
+        delete m_frame;
+        m_frame = NULL;
     }
     if(displayPicture != NULL)
     {
@@ -105,4 +84,10 @@ int RecognitionApp::OnExit()
     }
 
     return 0;
+}
+
+void RecognitionApp::SetImage(Image* img)
+{
+    displayPicture = img;
+    imgPanel->paintNow();
 }

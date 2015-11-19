@@ -19,6 +19,8 @@ public:
     vector<Image>* getTestImages();
     vector<int> getTestLabels();
 
+
+
 private:
     void readDirectories();
 

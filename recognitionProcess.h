@@ -13,11 +13,33 @@ class RecognitionProcess {
 private:
     ImageManager* imageManager;
     WebSocketConnector *endpoint;
-    ImageManager * m_Manager;
     void ContactServer();
+
+    bool m_emulateCamera;
+    bool m_isAlive;
+    bool m_validateNext;
+
+    int currentImageID;
+
+    // Current image vector
+
+    // Results
+    int label = -1;
+    double confidence = 0.0;
 public:
-    RecognitionProcess(string websocketIP, string trainingImages, string testingImages);
+    RecognitionProcess(string websocketIP, string trainingImages, string testingImages, bool emulateCamera = true);
     ~RecognitionProcess();
 
     Ptr<BasicFaceRecognizer> model;
+
+    void Run();
+    void Kill();
+
+    // Methods that communicate with the process thread
+    void ValidateCurrent();
+    void NextImage();
+    void PreviousImage();
+
+    // Returns the pointer of the current image
+    Image* GetCurrentImage();
 };
