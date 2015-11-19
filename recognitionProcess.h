@@ -13,10 +13,10 @@ class RecognitionProcess {
 private:
     ImageManager* imageManager;
     WebSocketConnector *endpoint;
-
+    ImageManager * m_Manager;
     void ContactServer();
 public:
-    RecognitionProcess(ImageManager *pManager);
+    RecognitionProcess(string websocketIP, string trainingImages, string testingImages);
     ~RecognitionProcess();
 
     Ptr<BasicFaceRecognizer> model;

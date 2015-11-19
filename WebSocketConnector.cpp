@@ -23,13 +23,24 @@ WebSocketConnector::WebSocketConnector() : m_open(false), m_done(false)
     m_client.set_fail_handler(bind(&WebSocketConnector::on_fail,this,::_1));
 }
 
+WebSocketConnector::~WebSocketConnector()
+{
+    if(asio_thread != NULL)
+    {
+        delete asio_thread;
+        asio_thread = NULL;
+    }
+}
+
 // This method will block until the connection is complete
 void WebSocketConnector::run(const std::string & uri) {
     // Create a new connection to the given URI
     client::connection_ptr con = m_client.get_connection(uri, m_ec);
     if (m_ec) {
+        std::string errorMsg = "Get Connection Error: ";
+        errorMsg.append(m_ec.message());
         m_client.get_alog().write(websocketpp::log::alevel::app,
-                                  "Get Connection Error: "+m_ec.message());
+                                  errorMsg );
         return;
     }
 
@@ -42,16 +53,16 @@ void WebSocketConnector::run(const std::string & uri) {
     m_client.connect(con);
 
     // Create a thread to run the ASIO io_service event loop
-    websocketpp::lib::thread asio_thread(&client::run, &m_client);
+    asio_thread = new websocketpp::lib::thread(&client::run, &m_client);
 
-    asio_thread.join();
+    asio_thread->detach();
 }
 
 
 void WebSocketConnector::on_open(websocketpp::connection_hdl hdl)
 {
     m_client.get_alog().write(websocketpp::log::alevel::app,
-                              "Connection opened, starting telemetry!");
+                              "Connection opened, starting connection!");
 
     scoped_lock guard(m_lock);
     m_open = true;
@@ -60,7 +71,7 @@ void WebSocketConnector::on_open(websocketpp::connection_hdl hdl)
 void WebSocketConnector::on_close(websocketpp::connection_hdl hdl)
 {
     m_client.get_alog().write(websocketpp::log::alevel::app,
-                              "Connection closed, stopping telemetry!");
+                              "Connection closed, stopping connection!");
 
     scoped_lock guard(m_lock);
     m_done = true;
@@ -69,7 +80,7 @@ void WebSocketConnector::on_close(websocketpp::connection_hdl hdl)
 void WebSocketConnector::on_fail(websocketpp::connection_hdl hdl)
 {
     m_client.get_alog().write(websocketpp::log::alevel::app,
-                              "Connection failed, stopping telemetry!");
+                              "Connection failed, stopping connection!");
 
     scoped_lock guard(m_lock);
     m_done = true;

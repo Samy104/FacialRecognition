@@ -48,11 +48,13 @@ set(SOURCE_FILES
         VideoPanel.cpp
         Directory.cpp
         WebSocketConnector.cpp
-        )
+        main.h)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
 target_link_libraries(FacialRecognition
         ${wxWidgets_LIBRARIES}
         ${OpenCV_LIBS}
+        boost_thread-mgw51-mt-s-1_59
+        boost_system-mgw51-mt-s-1_59
         )

@@ -1,6 +1,7 @@
 #pragma once
 
-#define __WEBSOCKETPP_CPP11_THREAD__
+
+#define BOOST_SYSTEM_NO_DEPRECATED
 
 #include <websocketpp/config/asio_no_tls_client.hpp>
 #include <websocketpp/client.hpp>
@@ -16,6 +17,7 @@ class WebSocketConnector {
 
 public:
     WebSocketConnector();
+    ~WebSocketConnector();
 
     typedef websocketpp::lib::lock_guard<websocketpp::lib::mutex> scoped_lock;
     typedef websocketpp::client<websocketpp::config::asio_client> client;
@@ -26,6 +28,10 @@ public:
     void on_open(websocketpp::connection_hdl hdl);
     void on_close(websocketpp::connection_hdl hdl);
     void on_fail(websocketpp::connection_hdl hdl);
+
+    websocketpp::lib::thread *asio_thread;
+
+    websocketpp::lib::thread* getAsioThread() {return asio_thread;}
 
     websocketpp::connection_hdl& getNetworkHandle();
     websocketpp::lib::error_code& getErrorCode();
