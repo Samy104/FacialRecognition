@@ -11,13 +11,15 @@ class ImageManager {
 
 public:
     ImageManager(string trainPath, string testPath);
-    vector<Mat> getOpenCVTrainImages();
-    vector<Image> getTrainImages();
+    vector<Mat>* getOpenCVTrainImages();
+    vector<Image>* getTrainImages();
     vector<int> getTrainLabels();
 
-    vector<Mat> getOpenCVTestImages();
-    vector<Image> getTestImages();
+    vector<Mat>* getOpenCVTestImages();
+    vector<Image>* getTestImages();
     vector<int> getTestLabels();
+
+
 
 private:
     void readDirectories();

@@ -1,22 +1,33 @@
 #pragma once
 
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
+#include "main.h"
+#include <wx/stdpaths.h>
 
 class wxMainFrame : public wxFrame{
 public:
     enum
     {
-        ID_Hello = 1
+        ID_SAVE = 1,
+        ID_VALID,
+        ID_PREV,
+        ID_NEXT
     };
 
-    wxMainFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+    wxMainFrame(const wxString& title, const wxPoint& pos, const wxSize& size, RecognitionApp* parent);
 private:
-    void OnHello(wxCommandEvent& event);
+    RecognitionApp* parent;
+
+    wxBitmap* validBitmap;
+    wxBitmap* nextBitmap;
+    wxBitmap* prevBitmap;
+
+    void OnSave(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+
+    void OnValid(wxCommandEvent& event);
+    void OnPrev(wxCommandEvent& event);
+    void OnNext(wxCommandEvent& event);
 
     wxDECLARE_EVENT_TABLE();
 

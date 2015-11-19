@@ -1,52 +1,93 @@
-
+#include "main.h"
 #include "wxMainFrame.h"
-#include <thread>
-#include "RecognitionProcess.h"
-#include "ImagePanel.h"
 
-class RecognitionApp: public wxApp
-{
-private:
-    //std::thread *m_mainProcess;
-public:
-    virtual bool OnInit();
-    virtual int OnExit();
-};
+wxMainFrame *m_frame;
 
 
 wxIMPLEMENT_APP(RecognitionApp);
 bool RecognitionApp::OnInit()
 {
-    ImageManager* manager = new ImageManager("../../Images/train", "../../Images/test");
-    RecognitionProcess* process = new RecognitionProcess(manager);
+    // Parse the arguments
+    std::string websocketIP = "ws://";
+    std::string trainingImages = "";
+    std::string testingImages = "";
+    if(argc == 4) // All necessary arguments are given
+    {
+        websocketIP.append(argv[1]);
+        trainingImages.append(argv[2]);
+        testingImages.append(argv[3]);
+    }
+    else if(argc == 2) // Only the IP is given
+    {
 
-    wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-    wxMainFrame *frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 340) );
+        websocketIP.append(argv[1]);
+        trainingImages = "../../Images/train";
+        testingImages = "../../Images/test";
+    }
+    else // Default values
+    {
+        websocketIP = "ws://garbinc.ddns.net:9000";
+        trainingImages = "../../Images/train";
+        testingImages = "../../Images/test";
+    }
 
-    string path = "../../Images/train/samy01_0.jpg";
+    process = new RecognitionProcess(websocketIP, trainingImages, testingImages);
 
-    Image* samyPic = new Image(path);
-    ImagePanel* imgPanel = new ImagePanel(frame, samyPic);
+    sizer = new wxBoxSizer(wxHORIZONTAL);
+    m_frame = new wxMainFrame( wxT("FacialRecognitionModule"), wxPoint(50, 50), wxSize(450, 450), this );
+
+    displayPicture = process->GetCurrentImage();
+    imgPanel = new ImagePanel(m_frame, displayPicture);
 
     sizer->Add(imgPanel, 1, wxEXPAND);
 
-    frame->SetSizer(sizer);
-    frame->Show( true );
+    m_frame->SetSizer(sizer);
+    m_frame->Show( true );
 
-    //m_mainProcess = new std::thread(&RecognitionProcess::RecognitionProcess, this);
-
+    m_mainProcess = new std::thread(std::bind(&RecognitionProcess::Run, process));
     return true;
 }
 
 int RecognitionApp::OnExit()
 {
-   /* m_mainProcess->join();
 
     if(m_mainProcess != NULL)
     {
         delete m_mainProcess;
         m_mainProcess = NULL;
-    }*/
+    }
+
+    if(sizer != NULL)
+    {
+        delete sizer;
+        sizer = NULL;
+    }
+    if(m_frame != NULL)
+    {
+        delete m_frame;
+        m_frame = NULL;
+    }
+    if(displayPicture != NULL)
+    {
+        delete displayPicture;
+        displayPicture = NULL;
+    }
+    if(imgPanel != NULL)
+    {
+        delete imgPanel;
+        imgPanel = NULL;
+    }
+    if(process != NULL)
+    {
+        delete process;
+        process = NULL;
+    }
 
     return 0;
+}
+
+void RecognitionApp::SetImage(Image* img)
+{
+    displayPicture = img;
+    imgPanel->paintNow();
 }
