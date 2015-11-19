@@ -48,7 +48,7 @@ set(SOURCE_FILES
         VideoPanel.cpp
         Directory.cpp
         WebSocketConnector.cpp
-        main.h main.h)
+        main.h)
 
 add_executable(FacialRecognition ${SOURCE_FILES})
 
